@@ -1,0 +1,42 @@
+{
+  "name": "foodreview",
+  "version": "1.0.0",
+  "description": "Food Review app for Montgomery, AL",
+  "main": "index.js",
+  "scripts": {
+    "test": "testfood",
+    "start": "cd backend && node --experimental-modules server.mjs && cd ../client && npm start",
+    "start:server": "cd backend && nodemon server.js --exec babel-node --presets es2015,stage-0",
+    "start:client": "cd client && npm start",
+    "start:dev": "concurrently \"npm start:server\" \"npm start:client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MGMSoftwareDevelopment/FoodReview.git"
+  },
+  "keywords": [
+    "mern",
+    "montgomery",
+    "freecodecamp"
+  ],
+  "author": "Scott Yamamoto & Terrell Jackson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MGMSoftwareDevelopment/FoodReview/issues"
+  },
+  "homepage": "https://github.com/MGMSoftwareDevelopment/FoodReview#readme",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.7",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.9",
+    "prop-types": "^15.6.2",
+    "react-markdown": "^4.0.6",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.12.1"
+  }
+}

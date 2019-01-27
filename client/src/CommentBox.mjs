@@ -1,16 +1,19 @@
-import React, { Component } from 'react';
+// CommentBox.js
+import React from 'react';
 import 'whatwg-fetch';
 import CommentList from './CommentList';
 import CommentForm from './CommentForm';
+import './CommentBox.css';
 
-class CommentBox extends Component {
+class CommentBox extends React.Component {
   constructor() {
     super();
     this.state = {
       data: [],
       error: null,
       author: '',
-      text: ''
+      comment: '',
+      updateId: null,
     };
     this.pollInterval = null;
   }
@@ -27,20 +30,16 @@ class CommentBox extends Component {
     this.pollInterval = null;
   }
 
-   onChangeText = (e) => {
+  onChangeText = (e) => {
     const newState = { ...this.state };
     newState[e.target.name] = e.target.value;
     this.setState(newState);
   }
 
-onUpdateComment = (id) => {
+  onUpdateComment = (id) => {
     const oldComment = this.state.data.find(c => c._id === id);
     if (!oldComment) return;
-    this.setState({
-        author: oldComment.author,
-        text: oldComment.text,
-        updateId: id
-    });
+    this.setState({ author: oldComment.author, text: oldComment.text, updateId: id });
   }
 
   onDeleteComment = (id) => {
@@ -69,16 +68,7 @@ onUpdateComment = (id) => {
 
   submitNewComment = () => {
     const { author, text } = this.state;
-    const data = [
-      ...this.state.data,
-      {
-        author,
-          text,
-          _id: Date.now().toString(),
-          updatedAt: new Date(),
-          createdAt: new Date()
-      },
-    ];
+    const data = [...this.state.data, { author, text, _id: Date.now().toString() }];
     this.setState({ data });
     fetch('/api/comments', {
       method: 'POST',
@@ -100,8 +90,7 @@ onUpdateComment = (id) => {
       if (!res.success) this.setState({ error: res.error.message || res.error });
       else this.setState({ author: '', text: '', updateId: null });
     });
-}
-}
+  }
 
   loadCommentsFromServer = () => {
     // fetch returns a promise. If you are not familiar with promises, see
@@ -116,12 +105,25 @@ onUpdateComment = (id) => {
 
   render() {
     return (
-      <CommentForm
-        author={this.state.author}
-        text={this.state.text}
-        handleChangeText={this.onChangeText}
-        handleSubmit={this.submitComment}
-     />
+      <div className="container">
+        <div className="comments">
+          <h2>Comments:</h2>
+          <CommentList
+            data={this.state.data}
+            handleDeleteComment={this.onDeleteComment}
+            handleUpdateComment={this.onUpdateComment}
+          />
+        </div>
+        <div className="form">
+          <CommentForm
+            author={this.state.author}
+            text={this.state.text}
+            handleChangeText={this.onChangeText}
+            submitComment={this.submitComment}
+          />
+        </div>
+        {this.state.error && <p>{this.state.error}</p>}
+      </div>
     );
   }
 }

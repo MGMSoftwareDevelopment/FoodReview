@@ -13,8 +13,8 @@ const Comment = props => (
       </div>
       <div className="singleCommentButtons">
         <span className="time">{moment(props.timestamp).fromNow()}</span>
-        <a onClick={() => { props.handleUpdateComment(props.id); }}>update</a>
-        <a onClick={() => { props.handleDeleteComment(props.id); }}>delete</a>
+        <button onClick={() => { props.handleUpdateComment(props.id); }}>update</button>
+        <button onClick={() => { props.handleDeleteComment(props.id); }}>delete</button>
       </div>
     </div>
   </div>

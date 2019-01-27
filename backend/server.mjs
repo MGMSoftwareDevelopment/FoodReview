@@ -2,8 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import mongoose from 'mongoose';
-import { getSecret } from './secrets';
-import Comment from './models/comment';
+import { getSecret } from './secrets.mjs';
+import Comment from './models/comment.mjs';
 
 // and create our instances
 const app = express();
